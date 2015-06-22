@@ -104,8 +104,9 @@ class EEStackController(CementBaseController):
            and
            (not self.app.pargs.adminer) and (not self.app.pargs.utils) and
            (not self.app.pargs.mailscanner) and (not self.app.pargs.all)):
-            self.app.pargs.web = True
-            self.app.pargs.admin = True
+            # self.app.pargs.web = True
+            # self.app.pargs.admin = True
+            pass
 
         if self.app.pargs.all:
             self.app.pargs.web = True
@@ -158,8 +159,12 @@ class EEStackController(CementBaseController):
         if self.app.pargs.utils:
             EEAdminStack(package_dict=EEVariables.ee_utils).install_stack()
 
+        for res in hook.run('stack_install_hook', self.app):
+            # do something with res... 
+            pass
+
         # Hook for stack install plugin
-        hook.run('stack_install_hook', self.app)
+        # hook.run('stack_install_hook', self.app)
 
 
     @expose(help="Remove packages")
@@ -174,8 +179,9 @@ class EEStackController(CementBaseController):
            (not self.app.pargs.phpmyadmin) and (not self.app.pargs.hhvm) and
            (not self.app.pargs.adminer) and (not self.app.pargs.utils) and
            (not self.app.pargs.mailscanner) and (not self.app.pargs.all)):
-            self.app.pargs.web = True
-            self.app.pargs.admin = True
+            # self.app.pargs.web = True
+            # self.app.pargs.admin = True
+            pass
 
         if self.app.pargs.all:
             self.app.pargs.web = True
@@ -229,7 +235,11 @@ class EEStackController(CementBaseController):
             EEAdminStack(package_dict=EEVariables.ee_utils).remove_stack()
 
         # Hook for stack remove plugins
-        hook.run('stack_remove_hook', self.app)
+        for res in hook.run('stack_remove_hook', self.app):
+            # do something with res... 
+            pass
+            # print("Hook Return Value > %s" % res)
+        # hook.run('stack_remove_hook', self.app)
 
 
     @expose(help="Purge packages")
